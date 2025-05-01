@@ -3,11 +3,16 @@
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/gulp": "^4.0.17",
+    "gulp": "^5.0.0"
+  }
 }
