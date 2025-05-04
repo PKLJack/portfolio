@@ -5,3 +5,9 @@
 .hero {
   background-image: url("../img/background.svg");
 }
+
+.about {
+  & .about__pic {
+    max-width: 20rem;
+  }
+}
