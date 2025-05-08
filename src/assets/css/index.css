@@ -11,3 +11,11 @@
     max-width: 20rem;
   }
 }
+
+.skills {
+  /* TODO: Maybe update for picture? */
+  & img {
+    height: 5rem;
+    object-fit: contain;
+  }
+}
