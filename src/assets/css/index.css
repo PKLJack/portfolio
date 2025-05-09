@@ -69,10 +69,9 @@
       transform 200ms ease-in-out;
   }
 
-  & .card:has(:hover, :focus-within) {
-    & .card-img-overlay {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  & .card-img:hover + .card-img-overlay,
+  & .card:focus-within .card-img-overlay {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
