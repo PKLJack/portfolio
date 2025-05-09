@@ -4,6 +4,10 @@
 
 .hero {
   background-image: url("../img/background.svg");
+
+  & h1 {
+    color: hsl(from var(--bs-primary) h 40% 30%);
+  }
 }
 
 .about {
