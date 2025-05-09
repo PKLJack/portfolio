@@ -19,7 +19,7 @@ const paths = {
     dest: "dist/assets/css/",
   },
   js: {
-    src: "src/assets/css/*.js",
+    src: "src/assets/js/*.js",
     dest: "dist/assets/js/",
   },
   favicon: {
