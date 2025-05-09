@@ -61,5 +61,18 @@
   /* Overwriting Bootstrap class */
   & .card-img-overlay {
     top: unset;
+
+    opacity: 0;
+    transform: translateY(100%);
+    transition:
+      opacity 200ms ease-in-out,
+      transform 200ms ease-in-out;
+  }
+
+  & .card:has(:hover, :focus-within) {
+    & .card-img-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
