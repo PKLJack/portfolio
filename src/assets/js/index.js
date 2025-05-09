@@ -1,3 +1,7 @@
+/* ======================================== */
+/* Portfolio                                */
+/* ======================================== */
+
 const portfolioArr = [
   {
     title: "Gazetteer",
@@ -38,3 +42,26 @@ function populatePortfolio(portfolioArr) {
 }
 
 populatePortfolio(portfolioArr);
+
+/* ======================================== */
+/* Contact Form                             */
+/* ======================================== */
+
+/** @type{HTMLFormElement} */
+const contactFormEl = document.querySelector(".contact form");
+
+contactFormEl
+  .querySelector('[type="submit"]')
+  .addEventListener("click", (ev) => {
+    ev.preventDefault();
+
+    const fd = new FormData(contactFormEl);
+    const fdo = Object.fromEntries(fd.entries());
+
+    console.log("Sending Message", fdo);
+
+    // TODO:
+    // - POST message to server
+    // - Take 200 or OK and show user success
+    //
+  });
