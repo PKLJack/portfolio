@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="assets/css/index.css" />
 
   <!-- JS -->
-  <!-- <script defer src="index.js"></script> -->
+  <script defer src="assets/js/index.js"></script>
 
 </head>
 
@@ -146,6 +146,35 @@
 
   </section>
 
+  <section class="portfolio container">
+
+    <h2 class="text-center fw-bold">Portfolio</h2>
+    <p class="text-center">My recent projects.</p>
+
+    <!-- TODO: -->
+    <!-- - Fix card text height? -->
+    <!-- - Replace Bootstrap card with custom card? -->
+    <!-- - Add dedicate button to open modal? -->
+    <div class="row g-3"></div>
+
+  </section>
+
 </body>
+
+<!-- TEMPLATES START -->
+<template id="portfolio-col-template">
+  <div class="col-md-6 col-lg-4">
+    <div class="card text-bg-light">
+      <img src="" class="card-img" alt="Gazetteer">
+      <div class="card-img-overlay bg-light" style="--bs-bg-opacity: 0.8">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">
+          This is a wider card with supporting text below as a natural lead-in to additional content.
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+<!-- TEMPLATES END -->
 
 </html>

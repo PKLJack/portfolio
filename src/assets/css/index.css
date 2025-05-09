@@ -52,3 +52,10 @@
     margin-top: -0.3rem;
   }
 }
+
+.portfolio {
+  /* Overwriting Bootstrap class */
+  & .card-img-overlay {
+    top: unset;
+  }
+}
