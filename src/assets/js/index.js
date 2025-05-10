@@ -20,11 +20,13 @@ const portfolioArr = [
     title: "Gazetteer",
     text: "An application for presenting demographic, climate, geographical and other data.",
     src: "assets/img/portfolio/gazetteer_demo_1-600x800.png",
+    dataBsTarget: "#proj-gazetteer-modal",
   },
   {
     title: "Company Directory",
     text: "An application for managing company personnel.",
-    src: "assets/img/portfolio/gazetteer_demo_1-600x800.png", // TODO: Fix this
+    src: "assets/img/portfolio/companydirectory_demo_1-600x800.png",
+    dataBsTarget: "#proj-companydirectory-modal",
   },
 ];
 
@@ -45,6 +47,7 @@ function populatePortfolio(portfolioArr) {
     tmp.querySelector(".card").dataset.index = i;
     tmp.querySelector(".card-title").textContent = obj.title;
     tmp.querySelector(".card-text").textContent = obj.text;
+    tmp.querySelector("a").setAttribute("data-bs-target", obj.dataBsTarget);
     tmp.querySelector("img").src = obj.src;
     tmp.querySelector("img").alt = obj.title;
 
