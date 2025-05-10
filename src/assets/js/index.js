@@ -229,7 +229,7 @@ generatePortfolioModals(projectData);
 const contactFormEl = document.querySelector(".contact form");
 
 contactFormEl
-  .querySelector('[type="submit"]')
+  ?.querySelector('[type="submit"]')
   .addEventListener("click", (ev) => {
     ev.preventDefault();
 
