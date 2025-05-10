@@ -15,49 +15,211 @@ const heroTyped = new Typed("#heroTyped", {
 /* Portfolio                                */
 /* ======================================== */
 
-const portfolioArr = [
+/**
+ *
+ * @typedef {Object} ProjectData
+ * @property {string} title - Title
+ * @property {string} dataBsTarget - `id` of modal
+ * @property {string} src - Card image `src`
+ * @property {string} excerpt - Short text on card
+ * @property {string} description - Long text on modal
+ * @property {{category: string, date: string}} information - Information
+ * @property {Object} links - Information
+ * @property {string=} links.github - Github Repo URL
+ * @property {string=} links.live - Live site URL
+ * @property {(Array<string|Array<string>>)} stack - Technology stack
+ */
+
+/** @type {ProjectData[]} */
+const projectData = [
   {
     title: "Gazetteer",
-    text: "An application for presenting demographic, climate, geographical and other data.",
-    src: "assets/img/portfolio/gazetteer_demo_1-600x800.png",
     dataBsTarget: "#proj-gazetteer-modal",
+    src: "assets/img/portfolio/gazetteer_demo_1-600x800.png",
+    excerpt:
+      "An application for presenting demographic, climate, geographical and other data.",
+    description:
+      "A web application where users can select different countries and view their demographic, climate, geographical and other data.",
+    information: {
+      category: "Full stack web application",
+      date: "October, 2024",
+    },
+    links: {
+      live: "#",
+      // github: "#",
+    },
+    stack: [
+      // prettier-ignore
+      "JavaScript",
+      ["Leaflet", "jQuery"],
+      "CSS",
+      ["Bootstrap 5"],
+      "PHP",
+    ],
   },
   {
     title: "Company Directory",
-    text: "An application for managing company personnel.",
-    src: "assets/img/portfolio/companydirectory_demo_1-600x800.png",
     dataBsTarget: "#proj-companydirectory-modal",
+    src: "assets/img/portfolio/companydirectory_demo_1-600x800.png",
+    excerpt: "An application for managing company personnel.",
+    description:
+      "A desktop website that can also run on a mobile that allows for the maintenance of a company personnel database to see who’s who, which department they are in and where they are.",
+    information: {
+      category: "Full stack web application",
+      date: "January, 2025",
+    },
+    links: {
+      live: "#",
+      // github: "#",
+    },
+    stack: [
+      // prettier-ignore
+      "JavaScript",
+      ["jQuery"],
+      "CSS",
+      ["Bootstrap 5"],
+      "PHP",
+      "MariaDB",
+    ],
   },
 ];
 
-function populatePortfolio(portfolioArr) {
-  const containerEl = document.querySelector(".portfolio .row");
+function generatePortfolioCards(arr) {
+  /**
+   * Create (col) card for portfolio
+   * @param {ProjectData} data
+   * @param {DocumentFragment} frag
+   * @returns {DocumentFragment} A card element, wrapped in a `<div class="col"></div>`
+   */
+  function createCard(data, frag) {
+    const { title, excerpt, src, dataBsTarget } = data;
+
+    frag.querySelector(".card-title").textContent = title;
+    frag.querySelector(".card-text").textContent = excerpt;
+
+    const imgEl = frag.querySelector(".card-img");
+    imgEl.src = src;
+    imgEl.alt = title;
+
+    // TODO: Consider replace `<a>` with `<button>`
+    frag.querySelector("a").setAttribute("data-bs-target", dataBsTarget);
+
+    return frag;
+  }
 
   /** @type{DocumentFragment} */
-  const templateContent = document.getElementById(
-    "portfolio-col-template",
+  const templateContent = document.querySelector(
+    "#portfolio-col-template",
   ).content;
 
-  const frag = document.createDocumentFragment();
-  console.assert(frag instanceof DocumentFragment, "not DocumentFragment"); // TODO: Remove this
+  const tmp = document.createDocumentFragment();
 
-  portfolioArr.forEach((obj, i) => {
+  arr.forEach((item) => {
     /** @type{DocumentFragment} */
-    let tmp = templateContent.cloneNode(true);
-    tmp.querySelector(".card").dataset.index = i;
-    tmp.querySelector(".card-title").textContent = obj.title;
-    tmp.querySelector(".card-text").textContent = obj.text;
-    tmp.querySelector("a").setAttribute("data-bs-target", obj.dataBsTarget);
-    tmp.querySelector("img").src = obj.src;
-    tmp.querySelector("img").alt = obj.title;
-
-    frag.append(tmp);
+    const clone = templateContent.cloneNode(true);
+    const card = createCard(item, clone);
+    tmp.append(card);
   });
 
-  containerEl.replaceChildren(frag);
+  // Transfer children from fragment to DOM
+  document.querySelector(".portfolio .row").replaceChildren(tmp);
 }
 
-populatePortfolio(portfolioArr);
+function generatePortfolioModals(arr) {
+  /**
+   * Create a simple `<li>` element with `textContent`
+   * @param {string} textContent
+   */
+  function plainLiEl(textContent) {
+    const liEl = document.createElement("li");
+    liEl.textContent = textContent;
+    return liEl;
+  }
+
+  /**
+   * @param {ProjectData} data
+   * @param {DocumentFragment} frag
+   * @returns {HTMLElement} A modal
+   */
+  function createModal(data, frag) {
+    const { dataBsTarget, title, src, description, information, links, stack } =
+      data;
+
+    const modelEl = frag.querySelector(".modal");
+    modelEl.id = dataBsTarget.substring(1); // Remove '#' sign
+    modelEl.setAttribute("aria-labelledby", `${modelEl.id}-label`);
+
+    const titleEl = modelEl.querySelector(".modal-title");
+    titleEl.id = `${modelEl.id}-label`;
+    titleEl.textContent = title;
+
+    modelEl.querySelector("img").src = src;
+    modelEl.querySelector(".project-description").textContent = description;
+
+    // Information
+    modelEl.querySelector(".project-category").textContent =
+      information.category;
+    modelEl.querySelector(".project-date").textContent = information.date;
+
+    if (links.live) {
+      const liveLiEl = document.createElement("li");
+      liveLiEl.innerHTML = `<a href="${links.live}">Visit Website</a>`;
+      modelEl.querySelector(".project-information").append(liveLiEl);
+    }
+
+    if (links.github) {
+      const githubLiEl = document.createElement("li");
+      githubLiEl.innerHTML = `<a href="${links.github}">Source Code</a>`;
+      modelEl.querySelector(".project-information").append(githubLiEl);
+    }
+
+    // Stack
+    const ulChildren = stack.map((strOrArr) => {
+      if (typeof strOrArr === "string") {
+        return plainLiEl(strOrArr);
+      }
+
+      if (Array.isArray(strOrArr)) {
+        const ulEl = document.createElement("ul");
+        for (const item of strOrArr) {
+          ulEl.append(plainLiEl(item));
+        }
+        return ulEl;
+      }
+
+      throw new Error("Unknown type");
+    });
+
+    // Transfer children from fragment to DOM
+    modelEl.querySelector(".project-stack").replaceChildren(...ulChildren);
+
+    return frag;
+  }
+
+  /** @type{DocumentFragment} */
+  const templateContent = document.querySelector(
+    "#proj-model-template",
+  ).content;
+
+  const tmp = document.createDocumentFragment();
+
+  arr.forEach((item) => {
+    /** @type{DocumentFragment} */
+    const clone = templateContent.cloneNode(true);
+    const modal = createModal(item, clone);
+    tmp.append(modal);
+  });
+
+  // Transfer children from fragment to DOM
+  document.body.append(document.createComment(" MODALS START "));
+  document.body.append(tmp);
+  document.body.append(document.createComment(" MODALS END "));
+}
+
+// TODO:
+// Consider put in `setTimeOut(..., 0)`?
+generatePortfolioCards(projectData);
+generatePortfolioModals(projectData);
 
 /* ======================================== */
 /* Contact Form                             */
@@ -81,144 +243,3 @@ contactFormEl
     // - Take 200 or OK and show user success
     //
   });
-
-/* ======================================== */
-/* Portfolio Modal                          */
-/* ======================================== */
-// TODO: Put to portfolio section
-//
-
-const portfolioModalArr = [
-  {
-    id: "proj-gazetteer-modal",
-    title: "Gazetteer",
-    imgSrc: "assets/img/portfolio/gazetteer_demo_1-600x800.png",
-    description:
-      "A web application where users can select different countries and view their demographic, climate, geographical and other data.",
-    information: {
-      category: "Full stack web application",
-      date: "October, 2024",
-    },
-    links: {
-      live: "#",
-      // github: "#",
-    },
-    stack: [
-      // prettier-ignore
-      "JavaScript",
-      ["Leaflet", "jQuery"],
-      "CSS",
-      ["Bootstrap 5"],
-      "PHP",
-    ],
-  },
-  {
-    id: "proj-companydirectory-modal",
-    title: "Company Directory",
-    imgSrc: "assets/img/portfolio/companydirectory_demo_1-600x800.png",
-    description:
-      "A desktop website that can also run on a mobile that allows for the maintenance of a company personnel database to see who’s who, which department they are in and where they are.",
-    information: {
-      category: "Full stack web application",
-      date: "January, 2025",
-    },
-    links: {
-      live: "#",
-      // github: "#",
-    },
-    stack: [
-      // prettier-ignore
-      "JavaScript",
-      ["jQuery"],
-      "CSS",
-      ["Bootstrap 5"],
-      "PHP",
-      "MariaDB",
-    ],
-  },
-];
-
-function generateModal(obj) {
-  // TODO:
-
-  /** @type{DocumentFragment} */
-  const templateContent = document.querySelector(
-    "#proj-model-template",
-  ).content;
-
-  // const frag = document.createDocumentFragment()
-
-  /** @type{DocumentFragment} */
-  const tmpEl = templateContent.cloneNode(true);
-
-  // Update id
-  tmpEl.querySelector(".modal").id = obj.id;
-
-  // Update aria-labelled-by
-  tmpEl
-    .querySelector(".modal")
-    .setAttribute("aria-labelledby", `${obj.id}-label`);
-
-  // Update h1, h1 id
-  tmpEl.querySelector(".modal-title").id = `${obj.id}-label`;
-  tmpEl.querySelector(".modal-title").textContent = obj.title;
-
-  // Update image
-  tmpEl.querySelector("img").src = obj.imgSrc;
-
-  // Update description
-  tmpEl.querySelector(".project-description").textContent = obj.description;
-
-  // Update information ul
-  tmpEl.querySelector(".project-category").textContent =
-    obj.information.category;
-  tmpEl.querySelector(".project-date").textContent = obj.information.date;
-
-  // Add website if exists
-  if (obj.links.live) {
-    const liveLiEl = document.createElement("li");
-    liveLiEl.innerHTML = `<a href="${obj.links.live}">Visit Website</a>`;
-    tmpEl.querySelector(".project-information").append(liveLiEl);
-  }
-
-  // Add Github Repo if exists
-  if (obj.links.github) {
-    const githubLiEl = document.createElement("li");
-    githubLiEl.innerHTML = `<a href="${obj.links.github}">Visit Website</a>`;
-    tmpEl.querySelector(".project-information").append(githubLiEl);
-  }
-
-  // Generate stack ul
-  const createLiEl = (textContent) => {
-    const liEl = document.createElement("li");
-    liEl.textContent = textContent;
-    return liEl;
-  };
-
-  const ulChildren = obj.stack.map((item) => {
-    if (typeof item === "string") {
-      return createLiEl(item);
-    }
-
-    if (Array.isArray(item)) {
-      const ulElement = document.createElement("ul");
-      for (x of item) {
-        ulElement.append(createLiEl(x));
-      }
-      return ulElement;
-    }
-
-    throw new Error("Unknown type");
-  });
-
-  tmpEl.querySelector(".project-stack").replaceChildren(...ulChildren);
-
-  return tmpEl;
-}
-
-document.body.append(generateModal(portfolioModalArr[0]));
-document.body.append(generateModal(portfolioModalArr[1]));
-
-function generateAllModals(arr) {
-  //
-}
