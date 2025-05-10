@@ -161,7 +161,17 @@
     <!-- - Fix card text height? -->
     <!-- - Replace Bootstrap card with custom card? -->
     <!-- - Add dedicate button to open modal? -->
-    <div class="row g-3"></div>
+    <div class="row g-3">
+      <!-- Cards go here -->
+    </div>
+
+    <!-- TODO: Remove this. Debug only. -->
+    <div class="mt-5">
+      <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#proj-gazetteer-modal">
+        Open modal 1</button>
+      <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#proj-companydirectory-modal">
+        Open modal 2</button>
+    </div>
 
   </section>
 
@@ -222,6 +232,9 @@
 
   </footer>
 
+  <!-- MODALS START -->
+  <!-- MODALS END -->
+
   <!-- TEMPLATES START -->
 
   <!-- Portfolio card -->
@@ -240,6 +253,48 @@
             <a href="#" class="stretched-link-x fs-1 text-dark" data-bs-toggle="modal"
               data-bs-target="#proj-XXXXX-modal"><i class="bi bi-file-richtext"></i></a>
           </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Portfolio modal -->
+  <template id="proj-model-template">
+    <div class="modal fade" id="proj-XXXXX-modal" tabindex="-1" aria-labelledby="proj-XXXXX-modal-label"
+      aria-hidden="true">
+      <div class="modal-dialog-scrollable modal-dialog-centered modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="proj-XXXXX-modal-label">THE TITLE</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <img class="img-fluid px-md-3" src="" />
+
+            <h2 class="mt-4">Description</h2>
+            <p class="project-description">THE DESCRIPTION.</p>
+
+            <h2 class="mt-4">Project Information</h2>
+            <ul class="project-information fw-bold">
+              <li>Category: <span class="project-category fw-normal">THE CATEGORY</span></li>
+              <li>Date: <span class="project-date fw-normal">THE DATE</span></li>
+            </ul>
+
+            <h2 class="mt-4">Project Technology Stack</h2>
+            <ul class="project-stack">
+              <LI>LIST ITEM 1</LI>
+              <LI>LIST ITEM 2</LI>
+            </ul>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+
         </div>
       </div>
     </div>
