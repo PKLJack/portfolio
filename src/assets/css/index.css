@@ -70,4 +70,11 @@
   & .card:focus-within .card-img-overlay {
     opacity: 1;
   }
+
+  /* No mouse to hover */
+  & .card-img-overlay {
+    @media (hover: none) {
+      opacity: 1;
+    }
+  }
 }
