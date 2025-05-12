@@ -101,8 +101,9 @@ function generatePortfolioCards(arr) {
     imgEl.src = src;
     imgEl.alt = title;
 
-    // TODO: Consider replace `<a>` with `<button>`
-    frag.querySelector("a").setAttribute("data-bs-target", dataBsTarget);
+    frag
+      .querySelector("[data-bs-target]")
+      .setAttribute("data-bs-target", dataBsTarget);
 
     return frag;
   }
