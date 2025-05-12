@@ -33,28 +33,22 @@ const heroTyped = new Typed("#heroTyped", {
 /** @type {ProjectData[]} */
 const projectData = [
   {
-    title: "Gazetteer",
-    dataBsTarget: "#proj-gazetteer-modal",
-    src: "assets/img/portfolio/gazetteer_demo_1-600x800.png",
-    excerpt:
-      "An application for presenting demographic, climate, geographical and other data.",
-    description:
-      "A web application where users can select different countries and view their demographic, climate, geographical and other data.",
+    title: "xxd.py", // TODO: Maybe embed HTML
+    dataBsTarget: "#proj-xxd-modal",
+    src: "assets/img/portfolio/xxd_py-600x800.webp",
+    excerpt: "Implementing xxd in Python.",
+    description: "A single file implementation of xxd in Python.",
     information: {
-      category: "Full stack web application",
-      date: "October, 2024",
+      category: "Command line application",
+      date: "March, 2025",
     },
     links: {
-      live: "https://pkljack-gazetteer.onrender.com",
-      // github: "#",
+      github: "https://github.com/PKLJack/xxd.py",
     },
     stack: [
       // prettier-ignore
-      "JavaScript",
-      ["Leaflet", "jQuery"],
-      "CSS",
-      ["Bootstrap 5"],
-      "PHP",
+      "Python",
+      ["Just Python"],
     ],
   },
   {
@@ -70,7 +64,6 @@ const projectData = [
     },
     links: {
       live: "https://pkljack-companydirectory.onrender.com",
-      // github: "#",
     },
     stack: [
       // prettier-ignore
@@ -80,6 +73,94 @@ const projectData = [
       ["Bootstrap 5"],
       "PHP",
       "MariaDB",
+    ],
+  },
+  {
+    title: "Gazetteer",
+    dataBsTarget: "#proj-gazetteer-modal",
+    src: "assets/img/portfolio/gazetteer_demo_1-600x800.png",
+    excerpt:
+      "An application for presenting demographic, climate, geographical and other data.",
+    description:
+      "A web application where users can select different countries and view their demographic, climate, geographical and other data.",
+    information: {
+      category: "Full stack web application",
+      date: "October, 2024",
+    },
+    links: {
+      live: "https://pkljack-gazetteer.onrender.com",
+    },
+    stack: [
+      // prettier-ignore
+      "JavaScript",
+      ["Leaflet", "jQuery"],
+      "CSS",
+      ["Bootstrap 5"],
+      "PHP",
+    ],
+  },
+  {
+    title: "Memory Game",
+    dataBsTarget: "#proj-memorygame-modal",
+    src: "assets/img/portfolio/memorygame_1-600x800.png",
+    excerpt: "A game where you flip cards and remember where they are.",
+    description: "A game where you flip cards and remember where they are.",
+    information: {
+      category: "Frontend web application",
+      date: "July, 2022",
+    },
+    links: {
+      live: "https://pkljack-memorygame-react.netlify.app/",
+      github: "https://github.com/PKLJack/react-memory-game",
+    },
+    stack: [
+      // prettier-ignore
+      "JavaScript",
+      ["ReactJS"],
+      "CSS",
+    ],
+  },
+  {
+    title: "Rock Paper Scissors Game",
+    dataBsTarget: "#proj-rockpaperscissors-modal",
+    src: "assets/img/portfolio/rock_paper_scissors_1-600x800.png",
+    excerpt: "A game of rock-paper-scissors.",
+    description: "A game of rock-paper-scissors.",
+    information: {
+      category: "Frontend web application",
+      date: "September, 2022",
+    },
+    links: {
+      live: "https://pkljack-rockpaperscissors-react.netlify.app/",
+      github: "https://github.com/PKLJack/react-rock-paper-scissors",
+    },
+    stack: [
+      // prettier-ignore
+      "JavaScript",
+      ["ReactJS"],
+      "CSS",
+    ],
+  },
+  {
+    title: "Whac-A-Mole Game",
+    dataBsTarget: "#proj-whacamole-modal",
+    src: "assets/img/portfolio/whac_a_mole_1-600x800.png",
+    excerpt: "A game of rock-paper-scissors.",
+    description:
+      "A game where you click on all the moles, they can be really fast.",
+    information: {
+      category: "Frontend web application",
+      date: "July, 2022",
+    },
+    links: {
+      live: "https://pkljack-whac-a-mole-react.netlify.app/",
+      github: "https://github.com/PKLJack/react-whac-a-mole",
+    },
+    stack: [
+      // prettier-ignore
+      "JavaScript",
+      ["ReactJS"],
+      "CSS",
     ],
   },
 ];
