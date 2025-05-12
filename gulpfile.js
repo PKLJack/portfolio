@@ -8,6 +8,7 @@
 import fs from "node:fs";
 
 import { src, dest, watch } from "gulp";
+import ghpages from "gh-pages";
 
 const paths = {
   html: {
@@ -89,6 +90,20 @@ export function img(cb) {
 export function debug(cb) {
   console.log("Hello from debug");
   cb();
+}
+
+export function publish() {
+  return ghpages.publish(
+    "dist",
+    {
+      history: false,
+      message: "Updates. Auto-generated commit by gh-pages.",
+    },
+    function (err) {
+      if (!err) return;
+      console.error(err);
+    },
+  );
 }
 
 export { watch_ as watch };
