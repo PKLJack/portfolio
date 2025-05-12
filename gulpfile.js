@@ -6,6 +6,9 @@
  * */
 
 import fs from "node:fs";
+import https from "node:https";
+import path from "node:path";
+import { execFileSync } from "node:child_process";
 
 import { src, dest, watch } from "gulp";
 import ghpages from "gh-pages";
@@ -81,15 +84,9 @@ export function favicon(cb) {
 export function img(cb) {
   // TODO: Consider better naming because of SVG.
   // TODO: Minimize images with imagemagick and svgo
-  // TODO: `{encoding: false}` ?
 
   src(paths.img.src, { encoding: false }).pipe(dest(paths.img.dest));
   src(paths.svg.src, { encoding: false }).pipe(dest(paths.svg.dest));
-  cb();
-}
-
-export function debug(cb) {
-  console.log("Hello from debug");
   cb();
 }
 
@@ -105,6 +102,65 @@ export function publish() {
       console.error(err);
     },
   );
+}
+
+export function downloadWebpTools() {
+  // ========================================
+  // Download tar.gz to tmp
+  // ========================================
+  const tmpDir = "tmp";
+  if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
+  const version = "1.5.0-linux-x86-64"; // TODO: Maybe move to env file
+  const tmpFile = path.join(tmpDir, `libwebp-${version}.tar.gz`);
+
+  if (!fs.existsSync(tmpFile)) {
+    const url = `https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${version}.tar.gz`;
+    // console.log(`Downloading: ${url}`);
+    const writeStream = fs.createWriteStream(tmpFile);
+
+    https
+      .get(url, (res) => {
+        res.pipe(writeStream);
+      })
+      .on("error", (err) => {
+        console.error(err);
+        process.exit(1);
+      });
+  }
+
+  // ========================================
+  // Put cwebp executable to bin
+  // ========================================
+  const binDir = "bin";
+  if (!fs.existsSync(binDir)) fs.mkdirSync(binDir);
+  const binFile = path.join(binDir, "cwebp");
+
+  if (!fs.existsSync(binFile)) {
+    // prettier-ignore
+    const args = [
+      "--extract", "--verbose", "--gzip",
+      "--file", tmpFile,
+      "--directory", binDir,
+      "--strip-components", 2,
+      `libwebp-${version}/bin/cwebp`,
+    ];
+
+    try {
+      const stdout = execFileSync("tar", args, {
+        stdio: "pipe",
+        encoding: "utf8",
+      });
+      console.log(stdout);
+    } catch (err) {
+      console.error(err);
+      process.exit(1);
+    }
+  }
+}
+
+export function debug(cb) {
+  console.log("Hello from debug");
+  cb();
 }
 
 export { watch_ as watch };
