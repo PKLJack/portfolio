@@ -45,7 +45,7 @@ const projectData = [
       date: "October, 2024",
     },
     links: {
-      live: "#",
+      live: "https://pkljack-gazetteer.onrender.com",
       // github: "#",
     },
     stack: [
@@ -69,7 +69,7 @@ const projectData = [
       date: "January, 2025",
     },
     links: {
-      live: "#",
+      live: "https://pkljack-companydirectory.onrender.com",
       // github: "#",
     },
     stack: [
