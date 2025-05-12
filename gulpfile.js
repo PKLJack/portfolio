@@ -28,7 +28,8 @@ const paths = {
     dest: "dist/assets/favicon/",
   },
   img: {
-    src: "src/assets/img/**/*.{jpg,png}",
+    // src: "src/assets/img/**/*.{jpg,png}",
+    src: "src/assets/img/**/*.{jpg,png,webp}",
     dest: "dist/assets/img/",
   },
   svg: {
