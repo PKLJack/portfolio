@@ -1,0 +1,80 @@
+/* ==================== */
+/* CSS                  */
+/* ==================== */
+
+.hero {
+  background-image: url("../img/background.svg");
+
+  & h1 {
+    color: hsl(from var(--bs-primary) h 40% 30%);
+  }
+}
+
+.about {
+  & .about__pic {
+    max-width: 20rem;
+  }
+}
+
+.skills {
+  /* TODO: Maybe update for picture? */
+  & img {
+    height: 5rem;
+    object-fit: contain;
+  }
+}
+
+.cv {
+  /* TODO:
+   * put border thickness, padding, left calculation
+   * into CSS variable
+   */
+  & li {
+    list-style: none;
+    position: relative;
+    padding-block-end: 1.75rem;
+    border-left: 0.2em solid dodgerblue;
+    padding-left: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  & li::before {
+    position: absolute;
+    content: " ";
+    background-color: white;
+    border: 0.2em solid dodgerblue;
+    width: 1.25rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    left: -0.7rem;
+    top: 0em;
+  }
+
+  /* Aligh circle with first item */
+  & li *:first-child {
+    margin-top: -0.3rem;
+  }
+}
+
+.portfolio {
+  /* Overwriting Bootstrap class */
+  & .card-img-overlay {
+    top: unset;
+
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  & .card:hover .card-img-overlay,
+  & .card:focus-within .card-img-overlay {
+    opacity: 1;
+  }
+
+  /* No mouse to hover */
+  & .card-img-overlay {
+    @media (hover: none) {
+      opacity: 1;
+    }
+  }
+}
