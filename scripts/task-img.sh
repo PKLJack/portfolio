@@ -3,8 +3,13 @@
 ## task-img.sh
 ## Copy or optimize images from src to dist
 
-
 set -euo pipefail
+
+
+## TODO: Maybe not like this...
+svgo() {
+  npx svgo "$@"
+}
 
 
 check-tools() {
@@ -66,10 +71,35 @@ webp-to-png() {
 }
 
 
+optimize-svg() {
+  printf "Optimizing SVG with SVGO...\n"
+  printf "  (Slow on first run)...\n"
+
+  shopt -s nullglob globstar
+
+  local infile outfile
+
+  for infile in src/assets/img/**/*.svg
+  do
+    ## right-strip file extension
+    filestem="${infile%.*}"
+    outfile="${filestem/src/dist}.svg"
+
+    if [ ! -f "$outfile" ]; then
+      svgo "$infile" -o "$outfile"
+    fi
+
+  done
+
+  shopt -u nullglob globstar
+}
+
+
 main() {
   check-tools
   raster-to-webp
   webp-to-png
+  optimize-svg
 }
 
 main

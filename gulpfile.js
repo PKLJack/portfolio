@@ -82,12 +82,18 @@ export function favicon(cb) {
 }
 
 export function img(cb) {
-  // TODO: Consider better naming because of SVG.
-  // TODO: Minimize images with imagemagick and svgo
+  // TODO: Maybe console log realtime stdout and stderr
+  execFile("bash", ["scripts/task-img.sh"], (error, stdout, stderr) => {
+    if (stderr) console.error(stderr);
 
-  // src(paths.img.src, { encoding: false }).pipe(dest(paths.img.dest));
-  taskImg();
-  src(paths.svg.src, { encoding: false }).pipe(dest(paths.svg.dest));
+    if (error) {
+      console.error(error);
+      process.exit(1);
+    }
+
+    console.log(stdout);
+  });
+
   cb();
 }
 
@@ -165,23 +171,8 @@ export function downloadWebpTools(cb) {
   return cb();
 }
 
-/** Handles all raster images */
-function taskImg() {
-  execFile("bash", ["scripts/task-img.sh"], (error, stdout, stderr) => {
-    if (stderr) console.error(stderr);
-
-    if (error) {
-      console.error(error);
-      process.exit(1);
-    }
-
-    console.log(stdout);
-  });
-}
-
 export function debug(cb) {
   console.log("Hello from debug");
-  taskImg();
   cb();
 }
 
